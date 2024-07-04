@@ -1,10 +1,10 @@
 ---
-layout:           post
-title:             "我的博客“
-author:            "YuanJie"
-header-style:      text
-catalog:           true
+layout: post
+title: "我的博客"
+author: "YuanJie"
+header-style: text
+catalog: true
 tags:
-    -Web
-    Javascript
+  - Web
+  - Javascript
 ---
