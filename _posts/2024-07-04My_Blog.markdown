@@ -1,5 +1,5 @@
 ---
-layout :           post
+layout:           post
 title:             "我的博客“
 author:            "YuanJie"
 header-style:      text
