@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "我的博客"
+title: "搭建博客"
 author: "YuanJie"
 header-style: text
 catalog: true
@@ -8,7 +8,7 @@ tags:
   - Web
   - Javascript
 ---
- 
+
  **·** Github Pages 搭建个人博客
 ===
 
