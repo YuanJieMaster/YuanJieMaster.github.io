@@ -5,8 +5,8 @@ author: "YuanJie"
 header-style: text
 catalog: true
 tags:
-  - Web
-  - Javascript
+  - 单片机
+  - stm32
 ---
 
  **·** Github Pages 搭建个人博客
