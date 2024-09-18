@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>Hexo博客日志（2）</title>
+      <link href="/2024/09/18/Hexo%E5%8D%9A%E5%AE%A2%E6%97%A5%E5%BF%97%EF%BC%882%EF%BC%89/"/>
+      <url>/2024/09/18/Hexo%E5%8D%9A%E5%AE%A2%E6%97%A5%E5%BF%97%EF%BC%882%EF%BC%89/</url>
+      
+        <content type="html"><![CDATA[<h1 id="本博客的报错和解决"><a href="#本博客的报错和解决" class="headerlink" title="本博客的报错和解决"></a>本博客的报错和解决</h1><p>在使用博客的过程中， 也出现了不少问题，虽然在日志（1）中也写了两个报错，而在这里就写写出现的报错我感觉可以单独写一篇，在写这篇博客的时候我可能还没有解决这些错误，会有我的探索过程</p><p>目前出现的最大的问题就是在博客本地仓库修改过之后，进行提交会报错，这种错误我之前也遇到过，一般都是通过推倒重来，重新搭建博客解决的，但这终究不是长久之计，于是想着深入了解报错的原因</p><p>首先我打算查看一下本地仓库和远程仓库的提交记录，看两者出了什么差错</p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//查看本地提交记录</span><br><span class="line">git log</span><br><span class="line">//查看远程仓库提交记录</span><br><span class="line">git log origin/main</span><br></pre></td></tr></table></figure><p>看了两边的提交记录之后确实差得很大，甚至就没有重合的部分，可能是我之前由于某种原因清除了本地的原因，既然完全不同，那还是重建仓库好了，这边也是，由于.deploy_git文件夹是用于存储文件以及git提交的文件夹，我本来想过删除本地的提交记录，但是好像不可行，于是我就干脆删除该文件夹，重新放入初始的.deploy_git文件夹，使用hexo g在.deploy_git文件夹中重新生成文件，推送，就好了。</p><p>总结一下，两边进程不同步，初始化.deploy_git文件夹即可</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>二叉树迭代遍历</title>
       <link href="/2024/09/05/%E4%BA%8C%E5%8F%89%E6%A0%91/"/>
       <url>/2024/09/05/%E4%BA%8C%E5%8F%89%E6%A0%91/</url>
