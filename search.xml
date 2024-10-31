@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>Ubuntu双系统安装</title>
+      <link href="/2024/10/31/Ubuntu%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85/"/>
+      <url>/2024/10/31/Ubuntu%E5%8F%8C%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Ubuntu双系统安装"><a href="#Ubuntu双系统安装" class="headerlink" title="Ubuntu双系统安装"></a>Ubuntu双系统安装</h1><p>鉴于Linux在的种种便利，最近打算装一个Ubuntu，虽然之前使用VMware装过Ubuntu的虚拟机，但是由于未知原因（可能是内存不够，同时运行Windows和Ubuntu比较吃力），我的Ubuntu虚拟机运行得比较卡顿，于是想干脆装个双系统好了。</p><p>准备材料：U盘（最好8G以上，不要有文件，到时候需要格式化，文件会损坏）</p><p>省流：将U盘作为Ubuntu启动盘，在空余的磁盘空间安装Ubuntu系统</p><p>安装过程如下</p><h2 id="制作启动U盘"><a href="#制作启动U盘" class="headerlink" title="制作启动U盘"></a>制作启动U盘</h2><p>下载Ubuntu.iso文件</p><p>官网：<a href="https://ubuntu.com/download/desktop">https://ubuntu.com/download/desktop</a></p><p>镜像网：<a href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu-releases/">https://mirrors.tuna.tsinghua.edu.cn/ubuntu-releases/</a></p><p>选择合适的版本，注意选择 标记LTS 的版本，表示长期支持（比如<strong>24.04</strong>，<strong>22.04</strong>之类的）</p><p>下载写入工具（比如rufus、win32diskImager），这里使用win32diskImager</p><p>下载地址：<a href="https://sourceforge.net/projects/win32diskimager/">https://sourceforge.net/projects/win32diskimager/</a></p><p>选择U盘，写入Ubuntu.iso文件</p><p>然后格式化U盘</p><h2 id="腾出磁盘空间"><a href="#腾出磁盘空间" class="headerlink" title="腾出磁盘空间"></a>腾出磁盘空间</h2><p>在磁盘管理（Windows+X可以看到）中，如果看到磁盘没有空余的磁盘空间（黑色），那么就压缩现有的分区，腾出磁盘空间，留给Ubuntu系统使用</p><p>由于安装的是双系统，Ubuntu会自动识别磁盘中空余的位置，也就是压缩卷预留出来的磁盘空间</p><h2 id="安装Ubuntu"><a href="#安装Ubuntu" class="headerlink" title="安装Ubuntu"></a>安装Ubuntu</h2><p>进入BIOS（不同品牌不同型号的电脑进入界面的方式不同，大部分可能是重启电脑狂按F2，也有些可以按特殊的小孔按钮进入），在BIOS界面中将启动盘对应的选项设置为Enable</p><p>Q、BIOS界面是什么？</p><p>A：BIOS（Basic Input&#x2F;Output System）是计算机的一种固件，用于在计算机开机时初始化硬件并引导操作系统。BIOS界面通常是一个文本模式的界面，允许用户配置系统设置，如启动顺序、硬件配置、日期和时间等。BIOS界面可以引导设备选择，允许用户选择从哪个设备（如硬盘、USB驱动器或光盘）启动操作系统。</p><p>然后再按F2，进入启动设备界面，就可以看到Ubuntu选项</p><p>进入Ubuntu，就可以进入Ubuntu安装配置界面</p><p>安装完成。</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>【7天用Go从零实现】Web框架Gee教程(2)</title>
       <link href="/2024/09/19/7%E5%A4%A9%E7%94%A8Go%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0Web%E6%A1%86%E6%9E%B6Gee%E6%95%99%E7%A8%8B%EF%BC%882%EF%BC%89/"/>
       <url>/2024/09/19/7%E5%A4%A9%E7%94%A8Go%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0Web%E6%A1%86%E6%9E%B6Gee%E6%95%99%E7%A8%8B%EF%BC%882%EF%BC%89/</url>
