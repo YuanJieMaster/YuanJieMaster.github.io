@@ -1,0 +1,322 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【青训营X豆包MarsCode】第六课-走进消息队列 | Youndry's Blog</title><meta name="author" content="Youndry"><meta name="copyright" content="Youndry"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="走进消息队列消息队列前世今生在现代分布式系统中，消息队列（Message Queue，简称 MQ）已成为一种不可或缺的中间件，用于解耦系统组件、提高系统可靠性与扩展性。消息队列的出现和发展，与以下几个系统问题密切相关： 系统崩溃：  在高并发系统中，直接处理请求可能导致系统崩溃。通过将请求先放入消息队列，系统可以避免瞬时过载，确保稳定运行，等待后端存储服务逐步处理这些请求。  服务处理能力有限：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【青训营X豆包MarsCode】第六课-走进消息队列">
+<meta property="og:url" content="https://yuanjiemaster.github.io/2024/11/30/%E3%80%90%E9%9D%92%E8%AE%AD%E8%90%A5X%E8%B1%86%E5%8C%85MarsCode%E3%80%91%E7%AC%AC%E5%85%AD%E8%AF%BE-%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/index.html">
+<meta property="og:site_name" content="Youndry&#39;s Blog">
+<meta property="og:description" content="走进消息队列消息队列前世今生在现代分布式系统中，消息队列（Message Queue，简称 MQ）已成为一种不可或缺的中间件，用于解耦系统组件、提高系统可靠性与扩展性。消息队列的出现和发展，与以下几个系统问题密切相关： 系统崩溃：  在高并发系统中，直接处理请求可能导致系统崩溃。通过将请求先放入消息队列，系统可以避免瞬时过载，确保稳定运行，等待后端存储服务逐步处理这些请求。  服务处理能力有限：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2024/08/28/U5bqYDNvrcMzLX1.jpg">
+<meta property="article:published_time" content="2024-11-30T05:47:50.000Z">
+<meta property="article:modified_time" content="2024-11-30T05:48:32.575Z">
+<meta property="article:author" content="Youndry">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2024/08/28/U5bqYDNvrcMzLX1.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://yuanjiemaster.github.io/2024/11/30/%E3%80%90%E9%9D%92%E8%AE%AD%E8%90%A5X%E8%B1%86%E5%8C%85MarsCode%E3%80%91%E7%AC%AC%E5%85%AD%E8%AF%BE-%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【青训营X豆包MarsCode】第六课-走进消息队列',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-11-30 13:48:32'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2024/08/28/U5bqYDNvrcMzLX1.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 時間軸</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 標籤</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清單</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音樂</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 電影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友鏈</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2024/09/05/4fLWZX1AB9jKGal.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Youndry's Blog"><span class="site-name">Youndry's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 時間軸</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 標籤</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清單</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音樂</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 電影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友鏈</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 關於</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【青训营X豆包MarsCode】第六课-走进消息队列</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-30T05:47:50.000Z" title="发表于 2024-11-30 13:47:50">2024-11-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-11-30T05:48:32.575Z" title="更新于 2024-11-30 13:48:32">2024-11-30</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【青训营X豆包MarsCode】第六课-走进消息队列"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="走进消息队列"><a href="#走进消息队列" class="headerlink" title="走进消息队列"></a>走进消息队列</h1><h2 id="消息队列前世今生"><a href="#消息队列前世今生" class="headerlink" title="消息队列前世今生"></a>消息队列前世今生</h2><p>在现代分布式系统中，消息队列（Message Queue，简称 MQ）已成为一种不可或缺的中间件，用于解耦系统组件、提高系统可靠性与扩展性。消息队列的出现和发展，与以下几个系统问题密切相关：</p>
+<p><strong>系统崩溃</strong>：</p>
+<ul>
+<li>在高并发系统中，直接处理请求可能导致系统崩溃。通过将请求先放入消息队列，系统可以避免瞬时过载，确保稳定运行，等待后端存储服务逐步处理这些请求。</li>
+</ul>
+<p><strong>服务处理能力有限</strong>：</p>
+<ul>
+<li>当系统的处理能力达到瓶颈时，前端请求会迅速堆积，造成系统崩溃。此时可以将请求放入消息队列，按需逐步消费，避免一瞬间的请求涌入导致服务过载。</li>
+</ul>
+<p><strong>链路耗时长尾</strong>：</p>
+<ul>
+<li>在一些分布式系统中，某些链路的处理时间可能会较长，导致长尾效应。通过异步方式将请求投递到消息队列中，避免长时间等待影响系统整体性能。</li>
+</ul>
+<p><strong>日志存储</strong>：</p>
+<ul>
+<li>在分布式系统中，日志的存储与分析是关键环节。将日志数据发送到消息队列后，后端日志分析平台可以异步获取数据，进行实时或定期分析。</li>
+</ul>
+<p><strong>什么是消息队列？</strong></p>
+<p>消息队列（MQ）是一个用于存储和传输消息的容器，其本质上是一个先进先出（FIFO）的队列。在分布式系统中，消息队列通常具有以下特点：</p>
+<ul>
+<li><strong>高吞吐</strong>：能够处理大量的消息，确保高并发场景下的稳定性。</li>
+<li><strong>高可用</strong>：消息队列需具备容错能力，保证数据不丢失。</li>
+<li><strong>高并发</strong>：能够支持多个生产者和消费者并发工作。</li>
+</ul>
+<p>系统中，消息生产者将消息发送到消息队列，消费者从队列中获取并处理消息。通过消息队列，可以实现系统的解耦和异步处理。</p>
+<p>生产 ——&gt; 消息队列 ——&gt; 消费</p>
+<p>业界消息队列：Kafka、RocketMQ、Pulsar、BMQ</p>
+<h2 id="消息队列-Kafka"><a href="#消息队列-Kafka" class="headerlink" title="消息队列 - Kafka"></a>消息队列 - Kafka</h2><p>Kafka 是一个高吞吐量的分布式消息队列，广泛应用于 <strong>离线数据处理</strong>、<strong>日志收集</strong>、<strong>指标数据监控</strong>、<strong>用户行为追踪</strong> 等场景。</p>
+<p><strong>如何使用 Kafka</strong></p>
+<p>创建集群 ——&gt; 新增 Topic ——&gt; 编写生产者逻辑 ——&gt; 编写消费者逻辑</p>
+<p>​	<strong>创建集群</strong>：部署 Kafka 集群并进行配置。</p>
+<p>​	<strong>新增 Topic</strong>：创建 Topic 作为消息的逻辑队列。</p>
+<p>​	<strong>编写生产者逻辑</strong>：将消息发送到 Kafka 集群中的指定 Topic。</p>
+<p>​	<strong>编写消费者逻辑</strong>：从 Kafka 中的 Topic 获取消息进行消费。</p>
+<p><strong>Kafka 架构</strong></p>
+<ul>
+<li><strong>Producer</strong>：生产者，批量发送Batch、数据压缩，负责将消息发送到 Kafka 集群。生产者支持批量发送和消息压缩，提升吞吐量。</li>
+<li><strong>Broker</strong>：Kafka 的消息存储和转发节点。每个 Broker 存储一定数量的分区数据。顺序写、时间戳索引文件、零拷贝。</li>
+<li><strong>Consumer</strong>：消费者，负责从 Kafka 中消费消息。消费者可以是独立消费或分组消费（Consumer Group）。手动分配（Low Level）、自动分配（High Level）、Consumer Rebalance。</li>
+</ul>
+<p>Topic 逻辑队列</p>
+<p>Cluster 物理集群</p>
+<p>Producer 生产者</p>
+<p>Consumer 消费者</p>
+<p>ConsumerGroup 消费者组</p>
+<p><strong>Kafka 核心组件</strong></p>
+<ul>
+<li><strong>ZooKeeper</strong>：用于管理 Kafka 集群的元数据和节点信息。</li>
+<li><strong>Partition</strong>：Kafka 中的消息按分区存储，每个 Topic 可以有多个分区。</li>
+<li><strong>Consumer Group</strong>：消费者组，允许多个消费者协作消费同一 Topic 下的消息。</li>
+</ul>
+<p><strong>Kafka 工作原理</strong></p>
+<p>​	Leader 和 Follower</p>
+<ul>
+<li>每个 Partition 有一个 Leader 和多个 Follower，Leader 负责所有的读写操作，Follower 负责复制数据。</li>
+</ul>
+<p>​	消费者平衡（Consumer Rebalance）</p>
+<ul>
+<li>消费者组中的消费者通过自动或手动分配机制（Low Level &#x2F; High Level）获取消息。</li>
+</ul>
+<p><strong>Kafka 的挑战与问题</strong></p>
+<p>​	<strong>运维成本高</strong>：Kafka 集群的维护与管理需要较高的运维成本，尤其在集群扩容和负载均衡方面。</p>
+<p>​	<strong>负载不均衡</strong>：当某些分区数据量过大时，可能导致负载不均衡的问题，处理起来比较复杂。	</p>
+<p>​	<strong>无缓存机制</strong>：Kafka 没有内建缓存机制，完全依赖操作系统的 Page Cache，可能会影响性能。</p>
+<p>​	<strong>多进程问题</strong>：Controller、Coordinator 和 Broker 在同一进程中，频繁的 IO 操作可能导致性能瓶颈。</p>
+<h2 id="消息队列-BMQ"><a href="#消息队列-BMQ" class="headerlink" title="消息队列 - BMQ"></a>消息队列 - BMQ</h2><p><strong>BMQ（字节跳动消息队列）</strong></p>
+<p>BMQ 是字节跳动内部开发的高性能、高可靠性的消息队列系统，旨在解决传统消息队列（如 Kafka）在高并发、大规模分布式环境下遇到的性能瓶颈和操作复杂性。BMQ 强调灵活的扩展能力、稳定性以及高效的数据流处理，支持多种高级特性来应对复杂的应用场景。</p>
+<p><strong>BMQ 的架构模式</strong></p>
+<p>BMQ 的架构设计旨在克服 Kafka 等传统消息队列系统中的一些问题：</p>
+<ol>
+<li><strong>高负载和不均衡</strong>：在 Kafka 中，负载均衡和消费者分配的管理较为复杂，且处理大量数据时容易造成节点压力过大。</li>
+<li><strong>性能瓶颈</strong>：Kafka 对于高吞吐量的数据写入和低延迟的处理场景有所欠缺，尤其在需要频繁更新或读取的场景下。</li>
+<li><strong>单点故障和高可用性</strong>：尽管 Kafka 支持分布式部署，但仍然面临因单个节点故障导致整个集群性能下降的风险。</li>
+</ol>
+<p>BMQ 通过以下几个设计解决了这些问题：</p>
+<ul>
+<li><strong>多机房部署</strong>：BMQ 支持跨多个数据中心和机房的部署，保证了高可用性和灾难恢复。多个机房的数据同步和负载均衡可以确保即使某一机房出现故障，消息队列仍能正常工作。</li>
+<li><strong>Partition 状态机</strong>：BMQ 采用状态机来管理消息的生命周期，从消息的生成、传输、存储到消费等各个环节都通过状态机进行高效的控制和管理。这种设计能够有效避免 Kafka 中可能出现的消息丢失、重复消费等问题。</li>
+<li><strong>Proxy 层</strong>：BMQ 的 Proxy 层位于客户端和 Broker 之间，负责消息的路由、负载均衡和流控。通过 Proxy，BMQ 可以动态地调整消息的路由规则和策略，进一步提升系统的可扩展性和容错能力。</li>
+</ul>
+<p><strong>BMQ 读写流程</strong></p>
+<p>BMQ 的读写流程基于 <strong>Failover 机制</strong> 和 <strong>写入状态机</strong>，确保在高并发和复杂的分布式环境下，消息可以高效、可靠地流转。</p>
+<ol>
+<li><strong>写入流程</strong>：<ul>
+<li><strong>Failover 机制</strong>：BMQ 采用容错机制，保证在 Broker 节点故障时，消息能够自动路由到其他可用节点，避免消息丢失。</li>
+<li><strong>写入状态机</strong>：每个消息在写入时都会经过状态机的管理，确保消息在存储过程中状态的正确转换。比如，消息在入队时的 “待处理” 状态，处理后进入 “已消费” 状态，避免消息丢失或重复消费。</li>
+</ul>
+</li>
+<li><strong>消费流程</strong>：<ul>
+<li>消费者通过订阅消息队列，按照队列的负载均衡规则，从多个队列分区中拉取消息。BMQ 的消费策略既支持单个消费者消费整个队列，也支持消费者组（Consumer Group）进行负载均衡消费。</li>
+</ul>
+</li>
+<li><strong>消息的可靠性保障</strong>：<ul>
+<li>消息的可靠性不仅体现在消息写入和消费过程中的状态机控制，也通过 <strong>数据镜像（Mirror）</strong> 来确保数据在多个数据中心的同步备份。BMQ 可以对消息进行多副本存储，确保数据的高可用性。</li>
+</ul>
+</li>
+</ol>
+<p><strong>BMQ 的高级特性</strong></p>
+<p>BMQ 提供了一些特殊的功能和特性来满足复杂业务场景中的需求：</p>
+<ol>
+<li><strong>主干与泳道（Lane）消息</strong>：<ul>
+<li><strong>主干消息</strong>：主要负责关键业务流的高效传输，通常处理较高优先级的消息。主干消息的处理链路通常具有较低的延迟。</li>
+<li><strong>泳道消息</strong>：用于低优先级或大批量的消息流。这些消息在主干消息流中会有独立的处理链路，并且可以异步处理。泳道设计支持消息的隔离和优先级调度。</li>
+</ul>
+</li>
+<li><strong>Databus（数据总线）</strong>：<ul>
+<li><strong>Databus</strong> 是 BMQ 中的一种数据同步和传递机制，允许多个服务间同步传递和共享实时数据。Databus 可以帮助解决跨服务的数据传递问题，特别是在微服务架构中，Databus 提供了一种高效且低延迟的数据流传输方式。</li>
+</ul>
+</li>
+<li><strong>Mirror（镜像机制）</strong>：<ul>
+<li><strong>镜像机制</strong> 用于跨机房或跨数据中心的数据备份。通过将消息数据同步到不同的节点或机房，BMQ 提供了灾备功能，确保系统在某个节点故障时仍能保持服务的持续可用性。</li>
+</ul>
+</li>
+<li><strong>Index（索引）</strong>：<ul>
+<li>BMQ 支持对消息内容进行索引，可以快速定位到特定的消息。这个索引功能对于一些高并发的查询和检索操作非常有用，尤其是在日志处理或审计系统中。</li>
+</ul>
+</li>
+<li><strong>Parquet（列式存储格式）</strong>：<ul>
+<li><strong>Parquet</strong> 是一种列式存储格式，BMQ 支持将消息存储为 Parquet 格式，这种存储方式非常适合于大规模数据分析场景。通过列式存储，BMQ 可以更加高效地存储和处理大量的日志或监控数据。</li>
+</ul>
+</li>
+</ol>
+<p><strong>BMQ 的开发流程</strong></p>
+<p>BMQ 的开发和部署流程通常包括以下几个步骤：</p>
+<ol>
+<li><strong>开发阶段</strong>：<ul>
+<li>开发人员编写消息生产者和消费者的逻辑，使用 BMQ 提供的 SDK 或 API 接口来实现消息的生产与消费。</li>
+</ul>
+</li>
+<li><strong>BOE（线下测试环境）</strong>：<ul>
+<li>开发完成后，将应用部署到 BOE（测试环境）进行基础功能的验证和性能测试。此阶段主要验证消息队列的基本功能是否正常，如消息的生产、消费、消息顺序等。</li>
+</ul>
+</li>
+<li><strong>PPE（验证环境）</strong>：<ul>
+<li>将应用部署到 PPE 环境，进行更为全面的集成测试。此阶段除了验证基础功能外，还包括高并发、大数据量场景下的性能测试，确保系统在负载下能够稳定运行。</li>
+</ul>
+</li>
+<li><strong>Prod（生产环境）</strong>：<ul>
+<li>最终，经过验证的应用会部署到生产环境，供实际业务使用。生产环境中的消息队列需要确保高可用性、容错性和性能，BMQ 在这一阶段通过多机房部署和数据镜像来保证稳定性。</li>
+</ul>
+</li>
+</ol>
+<p><strong>小结</strong></p>
+<p>1、BMQ的架构模式（解决 Kafka 存在的问题）</p>
+<p>2、BMQ读写流程（Failover 机制，写入状态机）</p>
+<p>3、BMQ高级特性（泳道、Databus、Mirror、Index、Parquet）</p>
+<h2 id="消息队列-RocketMQ"><a href="#消息队列-RocketMQ" class="headerlink" title="消息队列 - RocketMQ"></a>消息队列 - RocketMQ</h2><p>使用场景：低延时（电商、订单、库存、物流、秒杀）</p>
+<p>RocketMQ 是阿里巴巴开源的一款消息队列系统，特别适用于 <strong>低延时</strong> 的场景，如 <strong>电商订单</strong>、<strong>库存管理</strong>、<strong>物流调度</strong> 和 <strong>秒杀系统</strong> 等。</p>
+<p><strong>RocketMQ 基本概念</strong></p>
+<ul>
+<li><strong>Queue</strong>：消息队列，RocketMQ 中每个消息都是存储在一个队列中的。</li>
+<li><strong>Tag</strong>：消息标签，用于对消息进行分类和过滤。</li>
+</ul>
+<p><strong>RocketMQ 底层原理</strong></p>
+<p>RocketMQ 采用分布式架构，通过高效的存储模型和传输协议保证低延迟和高吞吐。其底层存储模型支持顺序写入、消息压缩和零拷贝技术。</p>
+<p><strong>RocketMQ 高级特性</strong></p>
+<ol>
+<li><strong>事务消息</strong>：支持事务消息的发送与回滚，用于保证消息的可靠性。</li>
+<li><strong>延迟发送和延迟消息</strong>：允许设置消息的延迟时间，适用于定时任务等场景。</li>
+<li><strong>消费失败和重试</strong>：支持消费失败的消息重试机制，保证消息不丢失。</li>
+<li><strong>死信队列</strong>：当消息无法正常消费时，消息会被投递到死信队列，用于后续的处理和监控。</li>
+</ol>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ol>
+<li><strong>BMQ 架构模式</strong>：通过多机房部署、泳道消息等方式，BMQ 提升了 Kafka 在高并发、高负载场景下的性能。</li>
+<li><strong>BMQ 读写流程</strong>：采用 Failover 机制和写入状态机，保证消息在分布式环境中的可靠传输。</li>
+<li><strong>RocketMQ 高级特性</strong>：支持事务消息、延迟消息、消费重试等功能，非常适合低延迟、高可靠性的场景。</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://yuanjiemaster.github.io">Youndry</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://yuanjiemaster.github.io/2024/11/30/%E3%80%90%E9%9D%92%E8%AE%AD%E8%90%A5X%E8%B1%86%E5%8C%85MarsCode%E3%80%91%E7%AC%AC%E5%85%AD%E8%AF%BE-%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">https://yuanjiemaster.github.io/2024/11/30/%E3%80%90%E9%9D%92%E8%AE%AD%E8%90%A5X%E8%B1%86%E5%8C%85MarsCode%E3%80%91%E7%AC%AC%E5%85%AD%E8%AF%BE-%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://yuanjiemaster.github.io" target="_blank">Youndry's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2024/08/28/U5bqYDNvrcMzLX1.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/12/02/TodoList%E6%97%A5%E5%BF%97%EF%BC%881%EF%BC%89/" title="【青训营X豆包MarsCode】第六课-走进消息队列"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">【青训营X豆包MarsCode】第六课-走进消息队列</div></div></a></div><div class="next-post pull-right"><a href="/2024/11/30/%E3%80%90%E9%9D%92%E8%AE%AD%E8%90%A5X%E8%B1%86%E5%8C%85MarsCode%E3%80%91%E7%AC%AC%E4%BA%94%E8%AF%BE-TOS%20%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98/" title="【青训营X豆包MarsCode】第五课-TOS 对象存储实战"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【青训营X豆包MarsCode】第五课-TOS 对象存储实战</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2024/08/28/U5bqYDNvrcMzLX1.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Youndry</div><div class="author-info__description">瞬间亦是永恒</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/YuanJieMaster"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/YuanJieMaster" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:xxxxxx@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="toc-number">1.</span> <span class="toc-text">走进消息队列</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F"><span class="toc-number">1.1.</span> <span class="toc-text">消息队列前世今生</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97-Kafka"><span class="toc-number">1.2.</span> <span class="toc-text">消息队列 - Kafka</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97-BMQ"><span class="toc-number">1.3.</span> <span class="toc-text">消息队列 - BMQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97-RocketMQ"><span class="toc-number">1.4.</span> <span class="toc-text">消息队列 - RocketMQ</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">1.4.1.</span> <span class="toc-text">小结</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/02/TodoList%E6%97%A5%E5%BF%97%EF%BC%881%EF%BC%89/" title="【青训营X豆包MarsCode】第六课-走进消息队列">【青训营X豆包MarsCode】第六课-走进消息队列</a><time datetime="2024-12-01T18:55:05.000Z" title="发表于 2024-12-02 02:55:05">2024-12-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/30/%E3%80%90%E9%9D%92%E8%AE%AD%E8%90%A5X%E8%B1%86%E5%8C%85MarsCode%E3%80%91%E7%AC%AC%E5%85%AD%E8%AF%BE-%E8%B5%B0%E8%BF%9B%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" title="【青训营X豆包MarsCode】第六课-走进消息队列">【青训营X豆包MarsCode】第六课-走进消息队列</a><time datetime="2024-11-30T05:47:50.000Z" title="发表于 2024-11-30 13:47:50">2024-11-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/30/%E3%80%90%E9%9D%92%E8%AE%AD%E8%90%A5X%E8%B1%86%E5%8C%85MarsCode%E3%80%91%E7%AC%AC%E4%BA%94%E8%AF%BE-TOS%20%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8%E5%AE%9E%E6%88%98/" title="【青训营X豆包MarsCode】第五课-TOS 对象存储实战">【青训营X豆包MarsCode】第五课-TOS 对象存储实战</a><time datetime="2024-11-30T01:57:50.000Z" title="发表于 2024-11-30 09:57:50">2024-11-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/28/%E3%80%90%E9%9D%92%E8%AE%AD%E8%90%A5X%E8%B1%86%E5%8C%85MarsCode%E3%80%91%E7%AC%AC%E5%9B%9B%E8%AF%BE-Redis-%E5%A4%A7%E5%8E%82%E7%A8%8B%E5%BA%8F%E5%91%98%E6%98%AF%E6%80%8E%E4%B9%88%E7%94%A8%E7%9A%84/" title="【青训营X豆包MarsCode】第四课-Redis-大厂程序员是怎么用的">【青训营X豆包MarsCode】第四课-Redis-大厂程序员是怎么用的</a><time datetime="2024-11-28T09:40:50.000Z" title="发表于 2024-11-28 17:40:50">2024-11-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/11/28/%E3%80%90%E9%9D%92%E8%AE%AD%E8%90%A5X%E8%B1%86%E5%8C%85MarsCode%E3%80%91%E7%AC%AC%E4%B8%89%E8%AF%BE-%E5%B8%A6%E4%BD%A0%E8%AE%A4%E8%AF%86%E5%AD%98%E5%82%A8%20&amp;%20%E6%95%B0%E6%8D%AE%E5%BA%93/" title="【青训营X豆包MarsCode】第三课-带你认识存储 &amp; 数据库">【青训营X豆包MarsCode】第三课-带你认识存储 &amp; 数据库</a><time datetime="2024-11-28T02:44:00.000Z" title="发表于 2024-11-28 10:44:00">2024-11-28</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Youndry</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
