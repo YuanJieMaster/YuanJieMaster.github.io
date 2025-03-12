@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>【初探Linux】文件结构及基本操作</title>
+      <link href="/2025/03/13/%E3%80%90%E5%88%9D%E6%8E%A2Linux%E3%80%91%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
+      <url>/2025/03/13/%E3%80%90%E5%88%9D%E6%8E%A2Linux%E3%80%91%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%8F%8A%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Linux文件结构"><a href="#Linux文件结构" class="headerlink" title="Linux文件结构"></a>Linux文件结构</h2><p>文件组织结构：目录树状结构，FHS（Filesystem Hierarchy Stardard）标准</p><p><img src="/./Linux%E6%97%A5%E5%BF%97%EF%BC%881%EF%BC%89.assets/4-1.png" alt="img"></p><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">在Linux系统中，常见的文件夹及其全称如下：</span><br><span class="line"></span><br><span class="line">/bin - Binary（可执行文件）：包含系统启动和日常操作所需的基础命令程序。</span><br><span class="line">/boot - Boot（启动文件）：包含启动加载程序文件和系统启动所需的内核文件。</span><br><span class="line">/dev - Devices（设备文件）：存放设备文件，用于与硬件设备交互。</span><br><span class="line">/etc - Etcetera（配置文件）：存放系统的配置文件和管理脚本。</span><br><span class="line">/home - Home（用户目录）：包含所有用户的个人文件夹。</span><br><span class="line">/lib - Library（库文件）：存放共享库文件，支持程序运行。</span><br><span class="line">/lost+found - Lost and Found（丢失和找到的文件）：用于存放通过文件系统修复过程中恢复的文件。</span><br><span class="line">/media - Media（可移动存储设备）：挂载可移动存储设备的默认位置，如CD、USB等。</span><br><span class="line">/mnt - Mount（挂载点）：用于临时挂载文件系统。</span><br><span class="line">/opt - Optional（可选程序包）：包含额外的应用程序包，一般是第三方软件的安装目录。</span><br><span class="line">/proc - Process（进程文件）：包含内核和系统进程的信息，通常是虚拟文件系统。</span><br><span class="line">/root - Root（根用户的家目录）：根用户（超级用户）的个人文件夹。</span><br><span class="line">/run - Run（运行时数据）：存放系统运行时的状态信息，如系统进程的PID文件等。</span><br><span class="line">/sbin - System Binary（系统二进制文件）：包含系统管理和维护所需的二进制文件，通常只有管理员可以访问。</span><br><span class="line">/srv - Service（服务数据）：存放由系统提供的服务相关的数据。</span><br><span class="line">/sys - System（系统信息）：包含内核和设备的信息，通常是虚拟文件系统。</span><br><span class="line">/tmp - Temporary（临时文件）：用于存放临时文件，系统重启后通常会清空此目录。</span><br><span class="line">/usr - User（用户相关文件）：包含用户程序和共享数据，通常是系统安装时包含的大多数应用程序和库文件。</span><br><span class="line">/var - Variable（可变数据）：存放系统运行时变化的文件，如日志文件、缓存、邮件等。</span><br></pre></td></tr></table></figure><hr><h2 id="Q、文件的基本操作有哪些？"><a href="#Q、文件的基本操作有哪些？" class="headerlink" title="Q、文件的基本操作有哪些？"></a>Q、文件的基本操作有哪些？</h2><p>新建、复制、删除、移动文件与重命名、查看文件、查看文件类型、搜索文件。</p><p>新建：</p><p>​touch filename 创建文件，如果文件存在那么就会更新时间戳</p><p>​mkdir direction_name、mkdir -p dir_p&#x2F;dir_s(if dir_p do not exist) 文件夹和文件不可同名（everything is a file）文件夹本质也是文件</p><p>复制：cp file target_dir、cp dir target_dir -r</p><p>删除：rm file、rm dir -r、rm file -f（题外话 chmod 444 file 给文件施加写保护</p><p>移动文件与重命名：mv file target_dir、mv file_old file_new</p><p>查看文件：cat file、cat -n flie 标上行数、nl -b a filename(&#x3D;cat -n)、more filenane 功能强大、head&#x2F;tail filename (-f 实时读取)</p><p>查看文件类型：file filename Linux中文件类型不根据文件后缀判断，根据文件内容判断</p><p>搜索文件：</p><p>​whereis filename </p><p>​find target_dir file、file [path] [option]  [action]、find target_dir -name filename、file target_dir -mtime 0（列出目标文件夹中24小时内修改过的文件）</p><p>​locate target_dir file：apt-get update、apt-get install locate、updatedb、locate target_dir file   locate命令通过mlocate.db数据库来检索信息，需要手动安装，更新</p><p>​which filename 通常用来确定是否成功安装某程序，只从PATH指定路径下搜索命令并返回第一个搜索到的结果</p><hr><p>参考链接：<a href="https://www.lanqiao.cn/courses/2585/learning/">蓝桥云课-Linux</a></p><hr><p>tips：nohup xeyes &amp; :eyes:</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>【代码随想录】二叉树（1）</title>
       <link href="/2025/02/23/%E3%80%90%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E3%80%91%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%881%EF%BC%89/"/>
       <url>/2025/02/23/%E3%80%90%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E3%80%91%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%881%EF%BC%89/</url>
