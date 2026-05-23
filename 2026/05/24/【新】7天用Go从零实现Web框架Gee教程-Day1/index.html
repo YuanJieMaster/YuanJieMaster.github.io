@@ -1,0 +1,198 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【新】7天用Go从零实现Web框架Gee教程-Day1 | Youndry's Blog</title><meta name="author" content="Youndry"><meta name="copyright" content="Youndry"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="写在前面： 一年半前，这个系列就是学长推荐给我的，当时我还是初学 Go 的状态，不过学到一半没有继续下去，最近出于工作原因需要用到 Golang，翻找学习资料的时候忽然发现这个很久之前学的东西，很是喜欢，一年半时间过去，再次回望这个 Gee 系列，心中有了许多新的感悟，之前学的时候糊里糊涂，没有意识到研究这个具有的极大价值，算是朝花夕拾了。  Gee 是一个 类 Gin 的 Web 框架 首先认识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【新】7天用Go从零实现Web框架Gee教程-Day1">
+<meta property="og:url" content="https://yuanjiemaster.github.io/2026/05/24/%E3%80%90%E6%96%B0%E3%80%917%E5%A4%A9%E7%94%A8Go%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0Web%E6%A1%86%E6%9E%B6Gee%E6%95%99%E7%A8%8B-Day1/index.html">
+<meta property="og:site_name" content="Youndry&#39;s Blog">
+<meta property="og:description" content="写在前面： 一年半前，这个系列就是学长推荐给我的，当时我还是初学 Go 的状态，不过学到一半没有继续下去，最近出于工作原因需要用到 Golang，翻找学习资料的时候忽然发现这个很久之前学的东西，很是喜欢，一年半时间过去，再次回望这个 Gee 系列，心中有了许多新的感悟，之前学的时候糊里糊涂，没有意识到研究这个具有的极大价值，算是朝花夕拾了。  Gee 是一个 类 Gin 的 Web 框架 首先认识">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2024/08/28/U5bqYDNvrcMzLX1.jpg">
+<meta property="article:published_time" content="2026-05-23T16:36:50.000Z">
+<meta property="article:modified_time" content="2026-05-23T16:50:52.718Z">
+<meta property="article:author" content="Youndry">
+<meta property="article:tag" content="Web">
+<meta property="article:tag" content="Go">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2024/08/28/U5bqYDNvrcMzLX1.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://yuanjiemaster.github.io/2026/05/24/%E3%80%90%E6%96%B0%E3%80%917%E5%A4%A9%E7%94%A8Go%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0Web%E6%A1%86%E6%9E%B6Gee%E6%95%99%E7%A8%8B-Day1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【新】7天用Go从零实现Web框架Gee教程-Day1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2026-05-24 00:50:52'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2024/08/28/U5bqYDNvrcMzLX1.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">29</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 時間軸</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 標籤</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清單</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音樂</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 圖庫</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 電影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友鏈</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 關於</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2024/09/05/4fLWZX1AB9jKGal.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Youndry's Blog"><span class="site-name">Youndry's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首頁</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 時間軸</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 標籤</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分類</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 清單</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音樂</span></a></li><li><a class="site-page child" href="/Gallery/"><i class="fa-fw fas fa-images"></i><span> 圖庫</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 電影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友鏈</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 關於</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【新】7天用Go从零实现Web框架Gee教程-Day1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-05-23T16:36:50.000Z" title="发表于 2026-05-24 00:36:50">2026-05-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-05-23T16:50:52.718Z" title="更新于 2026-05-24 00:50:52">2026-05-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/7%E5%A4%A9%E7%94%A8Go%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0Web%E6%A1%86%E6%9E%B6Gee/">7天用Go从零实现Web框架Gee</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【新】7天用Go从零实现Web框架Gee教程-Day1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>写在前面：</p>
+<p>一年半前，这个系列就是学长推荐给我的，当时我还是初学 Go 的状态，不过学到一半没有继续下去，最近出于工作原因需要用到 Golang，翻找学习资料的时候忽然发现这个很久之前学的东西，很是喜欢，一年半时间过去，再次回望这个 Gee 系列，心中有了许多新的感悟，之前学的时候糊里糊涂，没有意识到研究这个具有的极大价值，算是朝花夕拾了。</p>
+<hr>
+<p>Gee 是一个 类 Gin 的 Web 框架</p>
+<p>首先认识到出于开发一个 Web 框架这个目的来说，我们需要开发的是什么</p>
+<p>我们是基于标准库 “net&#x2F;http” 进行进一步开发，net&#x2F;http 包已提供的能力有监听端口，路由映射（静态），解析&#x2F;构建 HTTP 包（解析 HTTP Req，构建 HTTP Resp）</p>
+<p>那么我们可以进一步开发的功能有很多，比如：动态路由映射（在原有的静态路由升级而来），鉴权，处理 cookie、headers 等，插件功能</p>
+<p>那么我们在开发 Web 框架之前，需要熟悉 net&#x2F;http 的能力边界</p>
+<p>今天使用 net&#x2F;http 实现了最基本的 Web 功能：接收请求并返回。</p>
+<p>不过即使是这个最基本的功能，也用到了 net&#x2F;http 的三种能力：端口监听、路由映射（静态）、解析&#x2F;构建 HTTP 包</p>
+<p>我们在对于 net&#x2F;http 包的抽象基本能力的了解基础上，进一步熟悉实现这些能力具体的函数（包括它的定义、输入参数、输出等）</p>
+<p>端口监听：<code>http.ListenAndServe(addr string, handler Handler)</code></p>
+<p>路由映射（静态）:<code>http.HandleFunc(pattern string, handler Func(http.ResponseWriter, *http.Request))</code></p>
+<p>解析&#x2F;构建 HTTP 包：<code>http.Request</code>、<code>http.ResponseWriter</code> 具备这俩功能的东西——“请求处理器” Handler，它本身是一个接口（接口就是用于描述一种东西）</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">type</span> Handler <span class="keyword">interface</span> &#123;</span><br><span class="line">    ServeHTTP(http.ResponseWriter, *http.Request) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>整合这些相关函数，我们得到了最简单的 Web 服务</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;log&quot;</span></span><br><span class="line">	<span class="string">&quot;net/http&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	s := <span class="string">&quot;gopher&quot;</span></span><br><span class="line">	fmt.Printf(<span class="string">&quot;Hello and welcome, %s!\n&quot;</span>, s)</span><br><span class="line"></span><br><span class="line">	http.HandleFunc(<span class="string">&quot;/&quot;</span>, indexHandler)</span><br><span class="line">	log.Fatal(http.ListenAndServe(<span class="string">&quot;:8000&quot;</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">indexHandler</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;index&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过终端执行命令 <code>curl localhost:8000</code> 来进行测试验证，控制台会打印 index</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./img/Day1.assets/dccc302c7a206d8221eef8182bc05936.png" alt="dccc302c7a206d8221eef8182bc05936"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./img/Day1.assets/bf04e5830d503ee4744813be84ee6ac0.png" alt="bf04e5830d503ee4744813be84ee6ac0"></p>
+<p>遐思 - 1</p>
+<p>能不能导入 net 包，写成 net.ListenAndServe ?</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;net&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    net.ListenAndServe(<span class="string">&quot;:8080&quot;</span>, <span class="literal">nil</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不行，虽然从文件结构上来说 net 文件夹包含了 http 文件夹，但是从包管理来看，net 包 和 net&#x2F;http 包毫无关系，相互独立。</p>
+<p>疑惑 - 1</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	s := <span class="string">&quot;gopher&quot;</span></span><br><span class="line">	fmt.Printf(<span class="string">&quot;Hello and welcome, %s!\n&quot;</span>, s)</span><br><span class="line"></span><br><span class="line">	http.HandleFunc(<span class="string">&quot;/&quot;</span>, indexHandler)</span><br><span class="line">	log.Fatal(http.ListenAndServe(<span class="string">&quot;:8000&quot;</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">indexHandler</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;index&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用 Ghrome 浏览器 发起一次 localhost:8000 请求进行测试，打印两次 index</p>
+<p>浏览器发送请求时会自动发送一个 localhost:8000&#x2F;favicon.ico，打开开发者工具可以看到该请求</p>
+<p>并且因为 “&#x2F;“ 是通配符，所以两种路径的请求都会触发 indexHandler（通配符另外讨论）</p>
+<p>可以通过 curl 命令发送纯净的请求进行测试</p>
+<p>遐思 - 2</p>
+<p>为什么 <code>http.HandleFunc(pattern string, handler Func(http.ResponseWriter, *http.Request))</code> 的第二个参数不用 Handler 接口而用了一个类似的 函数，其实没什么深意，或者说有深意，就是偷懒，是一种“语法糖” 标准做法是这样的：<code>func Handle(pattern string, handler Handler)</code> 简化做法：<code>func HandleFunc(pattern string, func(http.ResponseWriter, *http.Request))</code> （其实关于这点在函数名 Handle 和 HandleFunc 里就可以窥见一二，Go 的发明者对于函数起名还是很讲究的）</p>
+<p>因为如果我们要创建一个实现 Handler 接口的对象相对比较繁琐，需要这样写：</p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	http.Handle(<span class="string">&quot;/&quot;</span>, handler&#123;name: <span class="string">&quot;handler-1&quot;</span>&#125;)</span><br><span class="line">	log.Fatal(http.ListenAndServe(<span class="string">&quot;:8000&quot;</span>, <span class="literal">nil</span>))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> handler <span class="keyword">struct</span> &#123;</span><br><span class="line">	name <span class="type">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h handler)</span></span> ServeHTTP(w http.ResponseWriter, r *http.Request) &#123;</span><br><span class="line">	fmt.Println(<span class="string">&quot;Handle:&quot;</span> + h.name)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/./img/Day1.assets/13b28369512f581df5a6f0222f2e87d0.png" alt="13b28369512f581df5a6f0222f2e87d0"></p>
+<p>不过 函数 和 对象 还有其他区别，函数无法存储数据，只能输入输出；而对象可以存储数据，像图中的 name。所以说用对象这种方式的可操作空间更大</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://yuanjiemaster.github.io">Youndry</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://yuanjiemaster.github.io/2026/05/24/%E3%80%90%E6%96%B0%E3%80%917%E5%A4%A9%E7%94%A8Go%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0Web%E6%A1%86%E6%9E%B6Gee%E6%95%99%E7%A8%8B-Day1/">https://yuanjiemaster.github.io/2026/05/24/%E3%80%90%E6%96%B0%E3%80%917%E5%A4%A9%E7%94%A8Go%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0Web%E6%A1%86%E6%9E%B6Gee%E6%95%99%E7%A8%8B-Day1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://yuanjiemaster.github.io" target="_blank">Youndry's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Web/">Web</a><a class="post-meta__tags" href="/tags/Go/">Go</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2024/08/28/U5bqYDNvrcMzLX1.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2026/03/11/%E3%80%90%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E3%80%91%E9%80%9A%E5%85%B3%E5%B0%8F%E8%8A%82/" title="代码随想录通关小节"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">代码随想录通关小节</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/09/19/7%E5%A4%A9%E7%94%A8Go%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0Web%E6%A1%86%E6%9E%B6Gee%E6%95%99%E7%A8%8B%EF%BC%882%EF%BC%89/" title="【7天用Go从零实现】Web框架Gee教程(2)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-19</div><div class="title">【7天用Go从零实现】Web框架Gee教程(2)</div></div></a></div><div><a href="/2024/09/19/7%E5%A4%A9%E7%94%A8Go%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0Web%E6%A1%86%E6%9E%B6Gee%E6%95%99%E7%A8%8B%EF%BC%881%EF%BC%89/" title="【7天用Go从零实现】Web框架Gee教程(1)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-19</div><div class="title">【7天用Go从零实现】Web框架Gee教程(1)</div></div></a></div><div><a href="/2024/12/02/TodoList%E6%97%A5%E5%BF%97%EF%BC%881%EF%BC%89/" title="TodoList日志（1）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-12-02</div><div class="title">TodoList日志（1）</div></div></a></div><div><a href="/2024/11/03/%E3%80%90%E9%9D%92%E8%AE%AD%E8%90%A5X%E8%B1%86%E5%8C%85MarsCode%E3%80%91%E7%AC%AC%E4%B8%80%E8%AF%BE-Go%20%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" title="【青训营X豆包MarsCode】第一课-Go 语言基础语法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-03</div><div class="title">【青训营X豆包MarsCode】第一课-Go 语言基础语法</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://s2.loli.net/2024/08/28/U5bqYDNvrcMzLX1.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Youndry</div><div class="author-info__description">瞬间亦是永恒</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">29</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/YuanJieMaster"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/YuanJieMaster" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:doujiangyoutiao202@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/24/%E3%80%90%E6%96%B0%E3%80%917%E5%A4%A9%E7%94%A8Go%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0Web%E6%A1%86%E6%9E%B6Gee%E6%95%99%E7%A8%8B-Day1/" title="【新】7天用Go从零实现Web框架Gee教程-Day1">【新】7天用Go从零实现Web框架Gee教程-Day1</a><time datetime="2026-05-23T16:36:50.000Z" title="发表于 2026-05-24 00:36:50">2026-05-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/11/%E3%80%90%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E3%80%91%E9%80%9A%E5%85%B3%E5%B0%8F%E8%8A%82/" title="代码随想录通关小节">代码随想录通关小节</a><time datetime="2026-03-11T09:28:00.000Z" title="发表于 2026-03-11 17:28:00">2026-03-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/16/%E3%80%90%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E3%80%91%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%884%EF%BC%89/" title="【代码随想录】二叉树（4）">【代码随想录】二叉树（4）</a><time datetime="2025-07-16T11:23:37.000Z" title="发表于 2025-07-16 19:23:37">2025-07-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/12/%E3%80%90%E4%BB%A3%E7%A0%81%E9%9A%8F%E6%83%B3%E5%BD%95%E3%80%91%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BC%883%EF%BC%89/" title="【代码随想录】二叉树（3）">【代码随想录】二叉树（3）</a><time datetime="2025-07-12T15:17:37.000Z" title="发表于 2025-07-12 23:17:37">2025-07-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/07/11/%E3%80%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E3%80%91%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" title="【操作系统】实现一个简单文件系统">【操作系统】实现一个简单文件系统</a><time datetime="2025-07-10T19:28:10.000Z" title="发表于 2025-07-11 03:28:10">2025-07-11</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2026 By Youndry</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
